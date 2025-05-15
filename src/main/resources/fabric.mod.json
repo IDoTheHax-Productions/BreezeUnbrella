@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.idothehax.breezeunbrella.client.BreezeunbrellaClient"
+      "net.idothehax.breezeunbrella.client.BreezeUmbrellaClient"
     ],
     "main": [
       "net.idothehax.breezeunbrella.BreezeUmbrella"
