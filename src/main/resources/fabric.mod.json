@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "breezeunbrella",
+  "version": "${version}",
+  "name": "BreezeUnbrella",
+  "description": "it slows your fall, you can boost upward by opening and closing it rapidly, and it protects you from rain while giving you regeneration",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/breezeunbrella/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.idothehax.breezeunbrella.client.BreezeunbrellaClient"
+    ],
+    "main": [
+      "net.idothehax.breezeunbrella.Breezeunbrella"
+    ]
+  },
+  "mixins": [
+    "breezeunbrella.mixins.json",
+    {
+      "config": "breezeunbrella.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
