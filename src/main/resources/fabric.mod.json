@@ -14,7 +14,7 @@
       "net.idothehax.breezeunbrella.client.BreezeunbrellaClient"
     ],
     "main": [
-      "net.idothehax.breezeunbrella.Breezeunbrella"
+      "net.idothehax.breezeunbrella.BreezeUmbrella"
     ]
   },
   "mixins": [
