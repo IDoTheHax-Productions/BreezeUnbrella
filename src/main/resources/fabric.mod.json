@@ -6,6 +6,7 @@
   "description": "it slows your fall, you can boost upward by opening and closing it rapidly, and it protects you from rain while giving you regeneration",
   "authors": [],
   "contact": {},
+  "contributors": ["hero_n8 - https://bsky.app/profile/heron8.bsky.social"],
   "license": "All-Rights-Reserved",
   "icon": "assets/breezeunbrella/icon.png",
   "environment": "*",
