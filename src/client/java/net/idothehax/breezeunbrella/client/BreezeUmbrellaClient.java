@@ -3,10 +3,9 @@ package net.idothehax.breezeunbrella.client;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.idothehax.breezeunbrella.BreezeUmbrellaItem;
-import net.minecraft.block.enums.CameraSubmersionType;
 import net.minecraft.client.MinecraftClient;
 
-public class BreezeunbrellaClient implements ClientModInitializer {
+public class BreezeUmbrellaClient implements ClientModInitializer {
 
     private static BreezeUmbrellaRenderer umbrellaRenderer;
 
