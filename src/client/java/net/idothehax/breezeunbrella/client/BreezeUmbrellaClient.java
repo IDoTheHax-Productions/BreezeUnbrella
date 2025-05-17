@@ -1,34 +1,31 @@
 package net.idothehax.breezeunbrella.client;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.idothehax.breezeunbrella.BreezeUmbrella;
 import net.idothehax.breezeunbrella.BreezeUmbrellaItem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.util.Identifier;
 
 public class BreezeUmbrellaClient implements ClientModInitializer {
-
-    private static BreezeUmbrellaRenderer umbrellaRenderer;
+    public static final EntityModelLayer UMBRELLA_MODEL_LAYER =
+            new EntityModelLayer(Identifier.of(BreezeUmbrella.MOD_ID, "umbrella"), "main");
 
     @Override
     public void onInitializeClient() {
-        umbrellaRenderer = new BreezeUmbrellaRenderer(); // Remove ItemRenderer parameter
-
-        // Register rendering event
-        WorldRenderEvents.AFTER_ENTITIES.register(context -> {
-            MinecraftClient client = MinecraftClient.getInstance();
-            if (client.player != null) {
-                client.player.getInventory().main.stream()
-                        .filter(stack -> stack.getItem() instanceof BreezeUmbrellaItem)
-                        .findFirst()
-                        .ifPresent(stack -> umbrellaRenderer.render(
-                                client.player,
-                                stack,
-                                context.matrixStack(),
-                                context.consumers(),
-                                15728880,
-                                1.0f     // Fixed tick delta
-                        ));
-            }
-        });
+        EntityModelLayerRegistry.registerModelLayer(
+                UMBRELLA_MODEL_LAYER,
+                BreezeUmbrellaModel::createModelData
+        );
+        EntityRendererRegistry.register(
+                BreezeUmbrella.BREEZE_UMBRELLA_ENTITY,
+                ctx -> new BreezeUmbrellaEntityRenderer(ctx)
+        );
     }
 }

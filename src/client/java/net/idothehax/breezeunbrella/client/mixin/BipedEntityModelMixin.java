@@ -21,24 +21,22 @@ public class BipedEntityModelMixin<T extends LivingEntity> {
     @Inject(method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
     public void setAngles(T entity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (entity instanceof AbstractClientPlayerEntity player && BreezeUmbrellaItem.isUsingUmbrella(player)) {
-            // Reset arm animations
-            this.rightArm.roll = 0.0F;
-            this.rightArm.yaw = 0.0F;
-            this.leftArm.roll = 0.0F;
-            this.leftArm.yaw = 0.0F;
-
-            // Set arms straight up
-            this.rightArm.pitch = (float) Math.toRadians(-180.0f); // Straight up
-            this.leftArm.pitch = (float) Math.toRadians(-180.0f);
+            // Adjust arms to look natural when holding umbrella
+            float holdingAngle = -160.0f;
+            this.rightArm.pitch = (float) Math.toRadians(holdingAngle);
+            this.leftArm.pitch = (float) Math.toRadians(holdingAngle);
 
             // Add slight outward angle
             this.rightArm.yaw = (float) Math.toRadians(15.0f);
             this.leftArm.yaw = (float) Math.toRadians(-15.0f);
 
-            // Add gentle sway
-            float sway = MathHelper.sin(h * 0.1f) * 0.05f;
-            this.rightArm.roll = sway;
-            this.leftArm.roll = -sway;
+            // Add natural arm sway
+            float swaySpeed = 0.05f;
+            float swayAmount = 5.0f;
+            float sway = MathHelper.sin(player.age * swaySpeed) * swayAmount;
+
+            this.rightArm.roll = (float) Math.toRadians(sway);
+            this.leftArm.roll = (float) Math.toRadians(-sway);
         }
     }
 }
