@@ -52,26 +52,44 @@ public class BreezeUmbrellaEntity extends LivingEntity {
             PlayerEntity owner = getOwner();
 
             if (owner == null || !owner.isAlive() || !owner.isUsingItem()) {
-                // Remove the umbrella if the owner is gone or stops using the item
                 discard();
                 return;
             }
 
-            // Update position to follow owner
-            Vec3d ownerPos = owner.getPos();
+            // Calculate the target position relative to the player
             double angle = Math.toRadians(owner.getYaw());
             double offsetZ = -0.5;
             double offsetX = -Math.sin(angle) * offsetZ;
             offsetZ = Math.cos(angle) * offsetZ;
 
-            setPosition(
-                    ownerPos.x + offsetX,
-                    ownerPos.y + 2.0,
-                    ownerPos.z + offsetZ
-            );
+            double targetX = owner.getX() + offsetX;
+            double targetY = owner.getY() + owner.getStandingEyeHeight() + 0.6;
+            double targetZ = owner.getZ() + offsetZ;
+
+            // Set position directly for server-side
+            setPosition(targetX, targetY, targetZ);
+
+            // Send position updates to clients more frequently
+            this.setVelocity(0, 0, 0); // Prevent physics from affecting the umbrella
+            this.velocityModified = true;
+        } else {
+            // Client-side interpolation
+            this.prevX = this.getX();
+            this.prevY = this.getY();
+            this.prevZ = this.getZ();
         }
     }
 
+    // Add these methods to disable physics and collision
+    @Override
+    public boolean hasNoGravity() {
+        return true;
+    }
+
+    @Override
+    public boolean isCollidable() {
+        return false;
+    }
     @Override
     public Arm getMainArm() {
         return null;
@@ -108,4 +126,5 @@ public class BreezeUmbrellaEntity extends LivingEntity {
     public void equipStack(EquipmentSlot slot, ItemStack stack) {
 
     }
+
 }

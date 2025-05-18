@@ -22,38 +22,31 @@ public class BreezeUmbrellaItem extends Item {
         ItemStack itemStack = player.getStackInHand(hand);
 
         if (!world.isClient) {
-            // Create the umbrella entity
             BreezeUmbrellaEntity umbrellaEntity = new BreezeUmbrellaEntity(
                     BreezeUmbrella.BREEZE_UMBRELLA_ENTITY,
                     world
             );
 
-            // Position the umbrella slightly above and behind the player
-            Vec3d pos = player.getPos();
-            double offsetY = 2.0; // Adjust this value to change how high above the player it appears
-            double offsetZ = -0.5; // Adjust this to change how far behind the player it appears
-
-            // Calculate position with player's rotation
+            // Set initial position exactly where it should be
             double angle = Math.toRadians(player.getYaw());
+            double offsetZ = -0.1;
             double offsetX = -Math.sin(angle) * offsetZ;
             offsetZ = Math.cos(angle) * offsetZ;
 
-            umbrellaEntity.setPos(
-                    pos.x + offsetX,
-                    pos.y + offsetY,
-                    pos.z + offsetZ
+            umbrellaEntity.setPosition(
+                    player.getX() + offsetX,
+                    player.getY() + player.getStandingEyeHeight() + 0.6,
+                    player.getZ() + offsetZ
             );
 
-            // Link the umbrella to the player
             umbrellaEntity.setOwner(player);
-
-            // Spawn the entity in the world
             world.spawnEntity(umbrellaEntity);
         }
 
         player.setCurrentHand(hand);
         return TypedActionResult.consume(itemStack);
     }
+
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
